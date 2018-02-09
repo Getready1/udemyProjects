@@ -9,13 +9,38 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
-    <script src="main.js"></script>
 </head>
 
 <body>
-
+    <div class="container">
+        <div class="row">
+            <div id="score" class="col-md-6">
+                <div class="scoreElements nums" id="num1">0</div>
+                <div class="scoreElements">
+                    <div>to</div>
+                </div>
+                <div class="scoreElements nums" id="num2">0</div>
+            </div>
+        </div>
+        <div class="row">
+            <p>Playing to: <span class="badge">0</span></p>
+        </div>
+        <div class="row">
+            <div id="menu" class="navbar navbar-default">
+                <div class="col-md-2">
+                    <input class="form-control" type="number" min="0">
+                </div>
+                <div class="btn-group">
+                    <button class="btn btn-default" id="player1">Player 1</button>
+                    <button class="btn btn-default" id="player2">Player 2</button>
+                    <button class="btn btn-default" id="reset">Reset</button>
+                </div>
+            </div>
+        </div>
+    </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="main.js"></script>
 </body>
 
 </html>

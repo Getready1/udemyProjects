@@ -1,0 +1,37 @@
+body {
+    text-transform: uppercase;
+}
+
+p {
+    font-size: 1.7em;
+}
+
+#score {
+    margin: auto;
+    float: none;
+    padding: 35px 0;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+}
+
+.navbar-default {
+    border-color: #97b1c8;
+}
+
+.scoreElements {
+    float: left;
+    text-align: center;
+    font-size: 4em;
+    margin: 0 10px;
+}
+
+.nums {
+    border: 1px solid #97b1c8;
+    border-radius: 3px;
+    padding: 0 25px;
+}
+
+#menu {
+    padding: 15px;
+}
