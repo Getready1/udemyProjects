@@ -8,102 +8,175 @@ function getRandomRGBElement() {
     return `rgb(${result.join(",")})`;
 }
 
-var lvls = {
-    easy: {
-        items: 3,
-        rows: 1
-    },
-    hard: {
-        items: 3,
-        rows: 3
-    }
-};
+var game = buildGame();
 
-var currentLvl = lvls.easy;
-
-$("#easy-btn").on("click", () => {
-    document.getElementById("color-wrapper").innerHTML = "";
-    initItems(lvls.easy);
-});
-
-$("#hard-btn").on("click", () => {
-    document.getElementById("color-wrapper").innerHTML = "";
-    initItems(lvls.hard);
-});
-
-initGame();
-initColors();
-initItems(currentLvl);
+function start() {
+    game.init();
+}
 
 $("#newColors").on("click", () => {
-    initColors();
+    game.helper.changeItemsColor();
+    $(".one").text(game.getRGB());
 });
 
-function initGame() {}
+$("#easy-btn").on("click", function() {
+    if (this.classList.contains("active")) return;
 
-function initColors() {
-    $(".flex-item").each((index, element) => {
-        element.style.backgroundColor = getRandomRGBElement();
-    });
-}
+    document.getElementById("color-wrapper").innerHTML = "";
+    game.level.setDifficulty("easy");
+    game.itemsBuilder.renderElements();
+    game.menu.setActiveMode();
 
-function initItems(lvl) {
-    var rows = getRows(lvl.rows);
-    var rowContainer = document.getElementById("color-wrapper");
+    ggg();
+});
 
-    rows.forEach(row => {
-        var items = getItems(lvl.items);
-        items.forEach((item, index) => {
-            row.appendChild(item);
-        });
+$("#hard-btn").on("click", function() {
+    if (this.classList.contains("active")) return;
 
-        $(rowContainer).append(row);
-    });
-}
+    document.getElementById("color-wrapper").innerHTML = "";
+    game.level.setDifficulty("hard");
+    game.itemsBuilder.renderElements();
+    game.menu.setActiveMode();
+    ggg();
+});
 
-function getItems(itemsCount) {
-    var items = [],
-        i;
+function buildGame() {
+    var modes = {
+        easy: {
+            items: 3,
+            rows: 1,
+            name: "easy"
+        },
+        hard: {
+            items: 3,
+            rows: 3,
+            name: "hard"
+        }
+    };
 
-    for (i = itemsCount; i--;) {
-        items.push(
-            createElement({
-                tag: "div",
-                class: "flex-item",
-                styles: {
-                    "background-color": getRandomRGBElement()
-                }
-            })
-        );
+    var difficulty;
+    var randomItemRGB;
+
+    function getRandomItemsRGB() {
+        var items = $(".flex-item");
+        var count = items.length;
+        var randomElementIndex = Math.ceil(Math.random() * count) - 1;
+        return items[randomElementIndex].style.backgroundColor;
     }
 
-    return items;
+    var helper = {
+        createElement(props) {
+            var element = document.createElement(props.tag);
+            element.className = props.class;
+            if (props.styles) this.stylizeElement(element, props.styles);
+            return element;
+        },
+        stylizeElement(element, styles) {
+            Object.keys(styles).forEach(styleKey => {
+                element.style[styleKey] = styles[styleKey];
+            });
+        },
+        changeItemsColor() {
+            $(".flex-item").each((index, element) => {
+                element.style.backgroundColor = getRandomRGBElement();
+                randomItemRGB = getRandomItemsRGB();
+                $(".one").text(game.getRGB());
+            });
+        }
+    };
+
+    var itemsBuilder = {
+        createItems(itemsCount) {
+            var items = [],
+                i;
+
+            for (i = itemsCount; i--;) {
+                items.push(
+                    helper.createElement({
+                        tag: "div",
+                        class: "flex-item",
+                        styles: {
+                            "background-color": getRandomRGBElement()
+                        }
+                    })
+                );
+            }
+
+            return items;
+        },
+        createRows(rowCount) {
+            var rows = [],
+                i;
+            for (i = rowCount; i--;) {
+                rows.push(
+                    helper.createElement({
+                        tag: "div",
+                        class: "flex-row"
+                    })
+                );
+            }
+
+            return rows;
+        },
+        renderElements() {
+            var rowContainer = document.getElementById("color-wrapper");
+            this.createRows(difficulty.rows).forEach(row => {
+                this.createItems(difficulty.items).forEach((item, index) => {
+                    row.appendChild(item);
+                });
+
+                $(rowContainer).append(row);
+            });
+        }
+    };
+
+    return {
+        init() {
+            this.level.setDifficulty(modes.easy);
+            itemsBuilder.renderElements();
+            this.menu.setActiveMode();
+            randomItemRGB = getRandomItemsRGB();
+        },
+        level: {
+            setDifficulty(mode) {
+                difficulty = modes[mode] || modes.easy;
+            },
+            getDifficulty() {
+                return difficulty || modes.easy;
+            }
+        },
+        itemsBuilder,
+        helper,
+        menu: {
+            setActiveMode() {
+                $(".modes").removeClass("active");
+                $(`#${difficulty.name}-btn`).addClass("active");
+            }
+        },
+        getRGB() {
+            return randomItemRGB || "zalupoi tebe po golove a ne rgb.";
+        }
+    };
 }
 
-function getRows(rowCount) {
-    var rows = [],
-        i;
-    for (i = rowCount; i--;) {
-        rows.push(
-            createElement({
-                tag: "div",
-                class: "flex-row"
-            })
-        );
-    }
+start();
 
-    return rows;
-}
+$(".one").text(game.getRGB());
 
-function createElement(props) {
-    var element = document.createElement(props.tag);
-    element.className = props.class;
-    if (props.styles) stylizeElement(element, props.styles);
-    return element;
-}
+function ggg() {
+    $(".flex-item").on("click", function() {
+        if (this.style.backgroundColor === game.getRGB()) {
+            alert("You are fucking right!");
+            var response = confirm("Play again?");
 
-function stylizeElement(element, styles) {
-    Object.keys(styles).forEach(styleKey => {
-        element.style[styleKey] = styles[styleKey];
+            response ? game.helper.changeItemsColor() : alert("Fuck you");
+        } else {
+            alert("Wrong!");
+            var response = confirm("Play again?");
+
+            response ? game.helper.changeItemsColor() : alert("Fuck you");
+        }
     });
 }
+
+ggg();
