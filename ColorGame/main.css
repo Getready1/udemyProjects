@@ -12,8 +12,6 @@
 
 .color-row {
     margin: auto;
-    display: flex;
-    justify-content: center;
     width: 60%;
 }
 
@@ -30,10 +28,61 @@
     justify-content: space-between;
 }
 
+#color-wrapper {
+    width: 55%;
+    margin: auto;
+}
+
 .color {
     height: 0;
     width: 20%;
     padding-bottom: 20%;
     margin: 2vh;
     border-radius: 5px;
+}
+
+.flex-row {
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+}
+
+.flex-item {
+    background: tomato;
+    margin: 1em;
+    flex: 1 0 auto;
+    height: auto;
+    border-radius: 5px;
+}
+
+.flex-item:before {
+    content: "";
+    float: left;
+    padding-top: 100%;
+}
+
+@media screen and (max-width: 980px) {
+    #color-wrapper {
+        width: 65%;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .flex-item {
+        margin: 0.5em;
+    }
+    #color-wrapper {
+        width: 75%;
+    }
+}
+
+@media screen and (max-width: 400px) {
+    .flex-item {
+        margin: 0.3em;
+    }
+    #color-wrapper {
+        width: 80%;
+    }
 }
