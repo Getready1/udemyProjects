@@ -1,0 +1,39 @@
+.row {
+    height: 100%;
+}
+
+.container {
+    height: 100vh;
+}
+
+.panel {
+    padding: 20px 10px;
+}
+
+.color-row {
+    margin: auto;
+    display: flex;
+    justify-content: center;
+    width: 60%;
+}
+
+.one {
+    font-size: 3em;
+    text-align: center;
+    text-transform: uppercase;
+    padding: 20px 0;
+    margin-top: 20px;
+}
+
+.two {
+    display: flex;
+    justify-content: space-between;
+}
+
+.color {
+    height: 0;
+    width: 20%;
+    padding-bottom: 20%;
+    margin: 2vh;
+    border-radius: 5px;
+}
