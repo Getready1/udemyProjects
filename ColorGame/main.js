@@ -19,7 +19,7 @@ $("#newColors").on("click", () => {
     $(".one").text(game.getRGB());
 });
 
-$("#easy-btn").on("click", function() {
+$("#easy-btn").on("click", function () {
     if (this.classList.contains("active")) return;
 
     document.getElementById("color-wrapper").innerHTML = "";
@@ -30,7 +30,7 @@ $("#easy-btn").on("click", function() {
     ggg();
 });
 
-$("#hard-btn").on("click", function() {
+$("#hard-btn").on("click", function () {
     if (this.classList.contains("active")) return;
 
     document.getElementById("color-wrapper").innerHTML = "";
@@ -154,7 +154,7 @@ function buildGame() {
             }
         },
         getRGB() {
-            return randomItemRGB || "zalupoi tebe po golove a ne rgb.";
+            return randomItemRGB || "Failed to get rgb.";
         }
     };
 }
@@ -164,7 +164,7 @@ start();
 $(".one").text(game.getRGB());
 
 function ggg() {
-    $(".flex-item").on("click", function() {
+    $(".flex-item").on("click", function () {
         if (this.style.backgroundColor === game.getRGB()) {
             alert("You are fucking right!");
             var response = confirm("Play again?");
