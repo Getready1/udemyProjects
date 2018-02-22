@@ -33,8 +33,8 @@ function onNewToDoAdding() {
     todoDelete.appendChild(i);
     li.appendChild(todoContent);
     li.appendChild(todoDelete);
-    li.onmouseenter = toggleDeleteButtonVisibility;
-    li.onmouseleave = toggleDeleteButtonVisibility;
+    li.onmouseenter = showDeleteButton;
+    li.onmouseleave = hideDeleteButton;
     li.setAttribute('data-id', $('#todos-list li').length + 1);
     ul.prepend(li);
 
@@ -42,14 +42,24 @@ function onNewToDoAdding() {
 }
 
 $('.todo-record-content').on('click', markAsDone);
-$('#todos-list li').hover(toggleDeleteButtonVisibility);
+$('#todos-list li').hover(showDeleteButton, hideDeleteButton);
 
 function markAsDone() {
     $(this).toggleClass('strikeout');
 }
 
 function toggleDeleteButtonVisibility() {
-    $(this).find('.delete').toggle();
+    $(this).find('.delete').css("width", "43px");
+}
+
+function hideDeleteButton(e) {
+    $(this).find('.delete').css("width", "0");
+    e.stopPropagation();
+}
+
+function showDeleteButton(e) {
+    $(this).find('.delete').css("width", "43px");
+    e.stopPropagation();
 }
 
 function deleteMe() {

@@ -27,6 +27,8 @@ ul li:nth-child(2n){
     float: none;
     margin: auto;
     padding: 0;
+    box-shadow: 0 0 20px 2px rgba(0,0,0, 0.1);
+
 }
 
 .panel-body {
@@ -73,12 +75,12 @@ ul li:nth-child(2n){
 }
 
   .delete {
-      display: none;
       color: white;
-      width: 43px;
+      width: 0;
       overflow: hidden;
       text-align: center;
       background-color: rgb(223, 75, 75);
+      transition: width 0.25s;
   }
 
   textarea:focus,
